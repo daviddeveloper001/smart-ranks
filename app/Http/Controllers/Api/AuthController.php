@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\Api\Auth\RegisterRequest;
@@ -65,11 +67,11 @@ class AuthController extends ApiControllerV1
     }
 
 
-    public function logout()
+   public function logout(Request $request): JsonResponse
     {
-        auth()->logout();
+        $request->user()->currentAccessToken()->delete();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return $this->ok('Sesión cerrada correctamente');
     }
 
 
