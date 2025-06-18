@@ -17,6 +17,7 @@ class User extends Authenticatable implements JWTSubject
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasRoles, SoftDeletes, HasApiTokens;
 
+    protected string $guard_name = 'api';
     /**
      * The attributes that are mass assignable.
      *
@@ -68,7 +69,7 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-     public function auditLogs(): HasMany
+    public function auditLogs(): HasMany
     {
         return $this->hasMany(AuditLog::class);
     }

@@ -23,6 +23,14 @@ class RegisterRequest extends FormRequest
         return $rules;
     }
 
+    protected function prepareForValidation()
+    {
+        if (! $this->user() && auth('api')->check()) {
+            $this->setUserResolver(fn() => auth('api')->user());
+        }
+    }
+
+
     public function messages(): array
     {
         return [

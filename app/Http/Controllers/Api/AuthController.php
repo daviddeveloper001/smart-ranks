@@ -34,7 +34,8 @@ class AuthController extends ApiControllerV1
 
     public function register(RegisterRequest $request)
     {
-        $isAdmin = auth()->check() && auth()->user()->hasRole('admin');
+        $isAdmin = auth('api')->check() && auth('api')->user()->hasRole('admin');
+
 
         $role = $isAdmin && in_array($request->role, ['admin', 'user'])
             ? $request->role
