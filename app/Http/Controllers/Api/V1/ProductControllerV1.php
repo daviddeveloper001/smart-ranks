@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Models\Product;
+use Illuminate\Http\Response;
 use App\Filters\ProductFilter;
 use App\Services\Api\V1\ProductServiceV1;
 use App\Http\Controllers\Api\V1\ApiControllerV1;
@@ -19,6 +20,10 @@ class ProductControllerV1 extends ApiControllerV1
         try {
             $perPage = request()->input('per_page', 10);
             $products = $this->productService->getAllProducts($filters, $perPage);
+
+            if ($this->include('category')) {
+                $products->load('category');
+            }
 
             return $this->ok('Products retrieved successfully', ProductResourceV1::collection($products));
         } catch (\Throwable $e) {
@@ -39,6 +44,9 @@ class ProductControllerV1 extends ApiControllerV1
     public function show(Product $product)
     {
         try {
+            if ($this->include('category')) {
+                $product->load('category');
+            }
             return $this->ok('Product retrieved successfully', new ProductResourceV1($product));
         } catch (\Throwable $e) {
             return $this->handleException($e);
@@ -58,6 +66,9 @@ class ProductControllerV1 extends ApiControllerV1
     public function destroy(Product $product)
     {
         try {
+            if (!auth()->user()->hasRole('admin')) {
+                return $this->error('You do not have permission to delete this product', Response::HTTP_FORBIDDEN);
+            }
             $this->productService->deleteProduct($product);
             return $this->ok('Product deleted successfully');
         } catch (\Throwable $e) {
