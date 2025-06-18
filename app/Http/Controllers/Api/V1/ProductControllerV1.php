@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Models\Product;
 use Illuminate\Http\Response;
 use App\Filters\ProductFilter;
+use App\DataTransferObjects\ProductDTO;
 use App\Services\Api\V1\ProductServiceV1;
 use App\Http\Controllers\Api\V1\ApiControllerV1;
 use App\Http\Resources\Api\V1\Product\ProductResourceV1;
@@ -34,7 +35,10 @@ class ProductControllerV1 extends ApiControllerV1
     public function store(StoreProductRequestV1 $request)
     {
         try {
-            $product = $this->productService->createProduct($request->validated());
+            $dto = ProductDTO::fromArray($request->validated());
+
+            $product = $this->productService->createProduct($dto);
+
             return $this->ok('Product created successfully', new ProductResourceV1($product));
         } catch (\Throwable $e) {
             return $this->handleException($e);

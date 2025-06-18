@@ -3,9 +3,10 @@
 namespace App\Services\Api\V1;
 
 use App\Models\Product;
-use App\Exceptions\ProductException;
-use App\Repositories\V1\ProductRepositoryV1;
 use Illuminate\Http\Response;
+use App\Exceptions\ProductException;
+use App\DataTransferObjects\ProductDTO;
+use App\Repositories\V1\ProductRepositoryV1;
 
 class ProductServiceV1
 {
@@ -43,10 +44,10 @@ class ProductServiceV1
         }
     }
 
-    public function createProduct(array $data)
+    public function createProduct(ProductDTO $dto): Product
     {
         try {
-            return $this->productRepository->create($data);
+            return $this->productRepository->create($dto->toArray());
         } catch (\Exception $e) {
             throw new ProductException(
                 'Failed to create Product',
