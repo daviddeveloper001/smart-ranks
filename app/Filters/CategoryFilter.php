@@ -6,6 +6,7 @@ class CategoryFilter extends QueryFilter
 {
     protected array $sortable = [
         'name',
+        'description',
         'createdAt' => 'created_at',
         'updatedAt' => 'updated_at',
     ];
@@ -13,6 +14,11 @@ class CategoryFilter extends QueryFilter
     public function name(string $value): void
     {
         $this->builder->where('name', 'LIKE', "%$value%");
+    }
+
+    public function description(string $value): void
+    {
+        $this->builder->where('description', 'LIKE', "%$value%");
     }
 
     public function createdAt(string $value): void

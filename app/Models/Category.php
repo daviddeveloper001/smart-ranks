@@ -21,4 +21,17 @@ class Category extends ModelBase
     {
         return $this->hasMany(Product::class);
     }
+
+    //Getter and Setter
+
+    public function getNameAttribute($value)
+    {
+        return ucfirst($value);
+    }
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = strtolower($value);
+    }
+
 }

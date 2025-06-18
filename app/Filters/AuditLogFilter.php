@@ -5,15 +5,17 @@ namespace App\Filters;
 class AuditLogFilter extends QueryFilter
 {
     protected array $sortable = [
-        'name',
+        'action',
         'createdAt' => 'created_at',
         'updatedAt' => 'updated_at',
     ];
 
-    public function name(string $value): void
+    public function action(string $value): void
     {
-        $this->builder->where('name', 'LIKE', "%$value%");
+        $this->builder->where('action', 'LIKE', "%$value%");
     }
+
+    
 
     public function createdAt(string $value): void
     {
