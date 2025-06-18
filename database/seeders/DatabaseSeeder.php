@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,9 +19,13 @@ class DatabaseSeeder extends Seeder
         $this->call(RolesAndPermissionsSeeder::class);
 
 
-        User::factory(5)->create()->each(function ($user) {
-            $user->assignRole('admin');
-        });
+        $admin = User::create([
+            'name' => 'Admin',
+            'email' => 'admin@example.com',
+            'password' => Hash::make('password'),
+        ]);
+
+        $admin->assignRole('admin');
 
 
         User::factory(95)->create()->each(function ($user) {

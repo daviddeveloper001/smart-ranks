@@ -16,25 +16,21 @@ class AuthController extends ApiControllerV1
 {
     public function login(LoginUserRequest $request)
     {
-        $request->validated($request->all());
+        $credentials = $request->only('email', 'password');
 
-        if (! Auth::attempt($request->only('email', 'password'))) {;
-            return $this->error('Credentials not match', 401);
+        if (! $token = auth('api')->attempt($credentials)) {
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        $user = User::firstWhere('email', $request->email);
-
-        return $this->ok(
-            'Authenticated',
-            [
-                'token' => $user->createToken(
-                    'API token for' . $user->email,
-                    ['*'],
-                    now()->addMonth()
-                )->plainTextToken
-            ]
-        );
+        return response()->json([
+            'message' => 'Authenticated',
+            'user' => auth('api')->user(),
+            'token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth('api')->factory()->getTTL() * 60 // segundos
+        ]);
     }
+
 
     public function register(RegisterRequest $request)
     {
@@ -67,12 +63,13 @@ class AuthController extends ApiControllerV1
     }
 
 
-   public function logout(Request $request): JsonResponse
+    public function logout(Request $request): JsonResponse
     {
-        $request->user()->currentAccessToken()->delete();
+        auth('api')->logout();
 
-        return $this->ok('Sesión cerrada correctamente');
+        return $this->success('Logout success');
     }
+
 
 
     public function refresh()
