@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Models\Category;
+use Illuminate\Http\Response;
 use App\Filters\CategoryFilter;
 use App\Services\Api\V1\CategoryServiceV1;
 use App\Http\Controllers\Api\V1\ApiControllerV1;
@@ -64,6 +65,9 @@ class CategoryControllerV1 extends ApiControllerV1
     public function destroy(Category $category)
     {
         try {
+            if (!auth()->user()->hasRole('admin')) {
+                return $this->error('You do not have permission to delete this category', Response::HTTP_FORBIDDEN);
+            }
             $this->categoryService->deleteCategory($category);
             return $this->ok('Category deleted successfully');
         } catch (\Throwable $e) {

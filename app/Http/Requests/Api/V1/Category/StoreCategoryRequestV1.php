@@ -3,22 +3,20 @@
 namespace App\Http\Requests\Api\V1\Category;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class StoreCategoryRequestV1 extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
-        return true;
+        return $this->user()?->hasRole('admin');
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
+    protected function failedAuthorization()
+    {
+        throw new AuthorizationException('Only administrators can create categories.');
+    }
+
     public function rules(): array
     {
         return [
