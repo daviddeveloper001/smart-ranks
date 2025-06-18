@@ -18,9 +18,12 @@ class CategoryControllerV1 extends ApiControllerV1
     {
         try {
             $perPage = request()->input('per_page', 10);
-            $categorys = $this->categoryService->getAllCategorys($filters, $perPage);
+            $categories = $this->categoryService->getAllCategorys($filters, $perPage);
+            if ($this->include('products')) {
+                $categories->load('products');
+            }
 
-            return $this->ok('Categorys retrieved successfully', CategoryResourceV1::collection($categorys));
+            return $this->ok('Categories retrieved successfully', CategoryResourceV1::collection($categories));
         } catch (\Throwable $e) {
             return $this->handleException($e);
         }
@@ -39,6 +42,9 @@ class CategoryControllerV1 extends ApiControllerV1
     public function show(Category $category)
     {
         try {
+            if ($this->include('products')) {
+                $category->load('products');
+            }
             return $this->ok('Category retrieved successfully', new CategoryResourceV1($category));
         } catch (\Throwable $e) {
             return $this->handleException($e);
