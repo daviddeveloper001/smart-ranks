@@ -2,23 +2,61 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\Api\Auth\RegisterRequest;
+use App\Http\Controllers\Api\V1\ApiControllerV1;
+use App\Http\Requests\Api\Auth\LoginUserRequest;
 
-class AuthController extends Controller
+class AuthController extends ApiControllerV1
 {
-
-
-    public function login()
+    public function login(LoginUserRequest $request)
     {
-        $credentials = request(['email', 'password']);
+        $request->validated($request->all());
 
-        if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+        if (! Auth::attempt($request->only('email', 'password'))) {;
+            return $this->error('Credentials not match', 401);
         }
 
-        return $this->respondWithToken($token);
+        $user = User::firstWhere('email', $request->email);
+
+        return $this->ok(
+            'Authenticated',
+            [
+                'token' => $user->createToken(
+                    'API token for' . $user->email,
+                    ['*'],
+                    now()->addMonth()
+                )->plainTextToken
+            ]
+        );
     }
+
+    public function register(RegisterRequest $request)
+    {
+        $isAdmin = auth()->check() && auth()->user()->hasRole('admin');
+
+        $role = $isAdmin && in_array($request->role, ['admin', 'user'])
+            ? $request->role
+            : 'user';
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        $user->assignRole($role);
+
+        return $this->success('Registration success', [
+            'user' => $user,
+            'assigned_role' => $role,
+        ], Response::HTTP_CREATED);
+    }
+
+
 
 
     public function me()
