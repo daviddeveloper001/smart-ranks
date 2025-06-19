@@ -1,14 +1,14 @@
 {
 	"info": {
-		"_postman_id": "smart-ranks-api-collection",
-		"name": "Smart Ranks API",
-		"description": "Colección completa de endpoints para la API de Smart Ranks - Sistema de Gestión de Productos",
+		"_postman_id": "07cca38b-dc59-414a-84fa-27c12ed4ee3a",
+		"name": "SmartRanks",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "smart-ranks"
+		"_exporter_id": "22980568",
+		"_collection_link": "https://interstellar-comet-11084.postman.co/workspace/My-Workspace~8c685600-ec25-4077-826c-b6559edb461c/collection/22980568-07cca38b-dc59-414a-84fa-27c12ed4ee3a?action=share&source=collection_link&creator=22980568"
 	},
 	"item": [
 		{
-			"name": "Autenticación",
+			"name": "Auth",
 			"item": [
 				{
 					"name": "Login",
@@ -17,609 +17,960 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"if (pm.response.code === 200) {",
-									"    const response = pm.response.json();",
-									"    pm.environment.set('token', response.token);",
-									"    pm.environment.set('user_id', response.user.id);",
-									"    console.log('Token guardado:', response.token);",
-									"}"
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
-								"key": "Content-Type",
+								"key": "Accept",
 								"value": "application/json",
 								"type": "text"
 							},
 							{
-								"key": "Accept",
-								"value": "application/json",
+								"key": "X-Public-Key",
+								"value": "3044c9ec-9c94-4cb6-8e3f-b1fb01a358d6",
+								"type": "text"
+							},
+							{
+								"key": "X-Private-Key",
+								"value": "7LTDAOAI1Y6W3YOJOZ7DQFDPD0FXWSXA",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"admin@smartranks.com\",\n    \"password\": \"password123\"\n}"
+							"raw": "{\r\n    \"email\": \"admin@example.com\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
 						"url": {
-							"raw": "{{base_url}}/api/login",
+							"raw": "{{URL_BASE}}/api/login",
 							"host": [
-								"{{base_url}}"
+								"{{URL_BASE}}"
 							],
 							"path": [
 								"api",
 								"login"
 							]
 						},
-						"description": "Autentica un usuario y devuelve token JWT"
-					},
-					"response": []
-				},
-				{
-					"name": "Register",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"John Doe\",\n    \"email\": \"john@example.com\",\n    \"password\": \"password123\",\n    \"password_confirmation\": \"password123\",\n    \"role\": \"user\"\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/api/register",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"register"
-							]
-						},
-						"description": "Registra un nuevo usuario"
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
 					},
 					"response": []
 				},
 				{
 					"name": "Logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}",
-								"type": "text"
-							},
 							{
 								"key": "Accept",
 								"value": "application/json",
 								"type": "text"
+							},
+							{
+								"key": "X-Public-Key",
+								"value": "3044c9ec-9c94-4cb6-8e3f-b1fb01a358d6",
+								"type": "text"
+							},
+							{
+								"key": "X-Private-Key",
+								"value": "7LTDAOAI1Y6W3YOJOZ7DQFDPD0FXWSXA",
+								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/api/logout",
+							"raw": "{{URL_BASE}}/api/logout",
 							"host": [
-								"{{base_url}}"
+								"{{URL_BASE}}"
 							],
 							"path": [
 								"api",
 								"logout"
 							]
 						},
-						"description": "Invalida el token activo"
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
 					},
 					"response": []
-				}
-			],
-			"description": "Endpoints de autenticación y gestión de usuarios"
-		},
-		{
-			"name": "Productos",
-			"item": [
+				},
 				{
-					"name": "Listar Productos",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
+					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
 							}
-						],
-						"url": {
-							"raw": "{{base_url}}/api/v1/products?page=1&per_page=10",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"products"
-							],
-							"query": [
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
 								{
-									"key": "page",
-									"value": "1",
-									"description": "Número de página"
-								},
-								{
-									"key": "per_page",
-									"value": "10",
-									"description": "Elementos por página"
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
 								}
 							]
 						},
-						"description": "Lista todos los productos con paginación"
-					},
-					"response": []
-				},
-				{
-					"name": "Obtener Producto",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/api/v1/products/1",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"products",
-								"1"
-							]
-						},
-						"description": "Muestra detalle de un producto específico"
-					},
-					"response": []
-				},
-				{
-					"name": "Crear Producto (Admin)",
-					"request": {
 						"method": "POST",
 						"header": [
 							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
 								"key": "Accept",
 								"value": "application/json",
 								"type": "text"
+							},
+							{
+								"key": "X-Public-Key",
+								"value": "3044c9ec-9c94-4cb6-8e3f-b1fb01a358d6",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "X-Private-Key",
+								"value": "7LTDAOAI1Y6W3YOJOZ7DQFDPD0FXWSXA",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Laptop Gaming\",\n    \"description\": \"Laptop de alto rendimiento para gaming\",\n    \"price\": 1299.99,\n    \"stock\": 50,\n    \"category_id\": 1\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/api/v1/products",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"products"
-							]
-						},
-						"description": "Crea un nuevo producto (requiere rol admin)"
-					},
-					"response": []
-				},
-				{
-					"name": "Actualizar Producto (Admin)",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
+							"raw": "{\r\n    \"name\": \"pedro\",\r\n    \"email\": \"carlos123@gmail.com\",\r\n    \"password\": \"12345678\",\r\n    \"password_confirmation\": \"12345678\",\r\n    \"role\":\"admin\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
 							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"Laptop Gaming Pro\",\n    \"description\": \"Laptop de alto rendimiento para gaming profesional\",\n    \"price\": 1499.99,\n    \"stock\": 75,\n    \"category_id\": 1\n}"
 						},
 						"url": {
-							"raw": "{{base_url}}/api/v1/products/1",
+							"raw": "{{URL_BASE}}/api/register",
 							"host": [
-								"{{base_url}}"
+								"{{URL_BASE}}"
 							],
 							"path": [
 								"api",
-								"v1",
-								"products",
-								"1"
+								"register"
 							]
 						},
-						"description": "Actualiza un producto existente (requiere rol admin)"
-					},
-					"response": []
-				},
-				{
-					"name": "Eliminar Producto (Admin)",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/api/v1/products/1",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"products",
-								"1"
-							]
-						},
-						"description": "Elimina un producto (requiere rol admin)"
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
 					},
 					"response": []
 				}
-			],
-			"description": "Endpoints para gestión de productos"
+			]
 		},
 		{
-			"name": "Categorías",
+			"name": "Categories",
 			"item": [
 				{
-					"name": "Listar Categorías",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
+					"name": "GET Categories",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
 							}
-						],
-						"url": {
-							"raw": "{{base_url}}/api/v1/categories",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"categories"
-							]
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
 						},
-						"description": "Lista todas las categorías"
+						"disableBodyPruning": true
 					},
-					"response": []
-				},
-				{
-					"name": "Obtener Categoría",
 					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/api/v1/categories/1",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"categories",
-								"1"
-							]
-						},
-						"description": "Muestra detalle de una categoría específica"
-					},
-					"response": []
-				},
-				{
-					"name": "Crear Categoría (Admin)",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"Electrónicos\",\n    \"description\": \"Productos electrónicos y tecnología\"\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/api/v1/categories",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"categories"
-							]
-						},
-						"description": "Crea una nueva categoría (requiere rol admin)"
-					},
-					"response": []
-				},
-				{
-					"name": "Actualizar Categoría (Admin)",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"Tecnología\",\n    \"description\": \"Productos de tecnología y electrónicos\"\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/api/v1/categories/1",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"categories",
-								"1"
-							]
-						},
-						"description": "Actualiza una categoría existente (requiere rol admin)"
-					},
-					"response": []
-				},
-				{
-					"name": "Eliminar Categoría (Admin)",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/api/v1/categories/1",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"categories",
-								"1"
-							]
-						},
-						"description": "Elimina una categoría (requiere rol admin)"
-					},
-					"response": []
-				}
-			],
-			"description": "Endpoints para gestión de categorías"
-		},
-		{
-			"name": "Auditoría",
-			"item": [
-				{
-					"name": "Listar Logs de Auditoría",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}",
-								"type": "text"
-							},
-							{
-								"key": "Accept",
-								"value": "application/json",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/api/v1/audit-logs?page=1&per_page=10",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"v1",
-								"audit-logs"
-							],
-							"query": [
+						"auth": {
+							"type": "bearer",
+							"bearer": [
 								{
-									"key": "page",
-									"value": "1",
-									"description": "Número de página"
-								},
-								{
-									"key": "per_page",
-									"value": "10",
-									"description": "Elementos por página"
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
 								}
 							]
 						},
-						"description": "Lista los logs de auditoría del sistema"
-					},
-					"response": []
-				},
-				{
-					"name": "Obtener Log de Auditoría",
-					"request": {
 						"method": "GET",
 						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{token}}",
-								"type": "text"
-							},
 							{
 								"key": "Accept",
 								"value": "application/json",
 								"type": "text"
+							},
+							{
+								"key": "X-Public-Key",
+								"value": "3044c9ec-9c94-4cb6-8e3f-b1fb01a358d6",
+								"type": "text"
+							},
+							{
+								"key": "X-Private-Key",
+								"value": "7LTDAOAI1Y6W3YOJOZ7DQFDPD0FXWSXA",
+								"type": "text"
 							}
 						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"kautzer.linnie@example.net\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "{{base_url}}/api/v1/audit-logs/1",
+							"raw": "{{URL_BASE}}/{{PREFIXV1}}/categories?include=products",
 							"host": [
-								"{{base_url}}"
+								"{{URL_BASE}}"
 							],
 							"path": [
-								"api",
-								"v1",
-								"audit-logs",
+								"{{PREFIXV1}}",
+								"categories"
+							],
+							"query": [
+								{
+									"key": "include",
+									"value": "products"
+								}
+							]
+						},
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "POST Categories",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Public-Key",
+								"value": "3044c9ec-9c94-4cb6-8e3f-b1fb01a358d6",
+								"type": "text"
+							},
+							{
+								"key": "X-Private-Key",
+								"value": "7LTDAOAI1Y6W3YOJOZ7DQFDPD0FXWSXA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Category 4\",\r\n    \"description\": \"test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BASE}}/{{PREFIXV1}}/categories",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"path": [
+								"{{PREFIXV1}}",
+								"categories"
+							]
+						},
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "GET Categories",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						},
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Public-Key",
+								"value": "3044c9ec-9c94-4cb6-8e3f-b1fb01a358d6",
+								"type": "text"
+							},
+							{
+								"key": "X-Private-Key",
+								"value": "7LTDAOAI1Y6W3YOJOZ7DQFDPD0FXWSXA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"kautzer.linnie@example.net\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BASE}}/{{PREFIXV1}}/categories/1?include=products",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"path": [
+								"{{PREFIXV1}}",
+								"categories",
+								"1"
+							],
+							"query": [
+								{
+									"key": "include",
+									"value": "products"
+								}
+							]
+						},
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Categories",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Public-Key",
+								"value": "3044c9ec-9c94-4cb6-8e3f-b1fb01a358d6",
+								"type": "text"
+							},
+							{
+								"key": "X-Private-Key",
+								"value": "7LTDAOAI1Y6W3YOJOZ7DQFDPD0FXWSXA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"kautzer.linnie@example.net\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BASE}}/{{PREFIXV1}}/categories/1",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"path": [
+								"{{PREFIXV1}}",
+								"categories",
 								"1"
 							]
 						},
-						"description": "Muestra detalle de un log de auditoría específico"
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH Categories",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Public-Key",
+								"value": "3044c9ec-9c94-4cb6-8e3f-b1fb01a358d6",
+								"type": "text"
+							},
+							{
+								"key": "X-Private-Key",
+								"value": "7LTDAOAI1Y6W3YOJOZ7DQFDPD0FXWSXA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Category 4 update\",\r\n    \"description\": \"test update\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BASE}}/{{PREFIXV1}}/categories/12",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"path": [
+								"{{PREFIXV1}}",
+								"categories",
+								"12"
+							]
+						}
 					},
 					"response": []
 				}
-			],
-			"description": "Endpoints para consulta de logs de auditoría"
-		}
-	],
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
+			]
 		},
 		{
-			"listen": "test",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		}
-	],
-	"variable": [
-		{
-			"key": "base_url",
-			"value": "http://localhost:8000",
-			"type": "string"
-		},
-		{
-			"key": "token",
-			"value": "",
-			"type": "string"
-		},
-		{
-			"key": "user_id",
-			"value": "",
-			"type": "string"
+			"name": "Products",
+			"item": [
+				{
+					"name": "GET Products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						},
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Public-Key",
+								"value": "3044c9ec-9c94-4cb6-8e3f-b1fb01a358d6",
+								"type": "text"
+							},
+							{
+								"key": "X-Private-Key",
+								"value": "7LTDAOAI1Y6W3YOJOZ7DQFDPD0FXWSXA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"kautzer.linnie@example.net\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BASE}}/{{PREFIXV1}}/products",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"path": [
+								"{{PREFIXV1}}",
+								"products"
+							]
+						},
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "GET Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						},
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Public-Key",
+								"value": "3044c9ec-9c94-4cb6-8e3f-b1fb01a358d6",
+								"type": "text"
+							},
+							{
+								"key": "X-Private-Key",
+								"value": "7LTDAOAI1Y6W3YOJOZ7DQFDPD0FXWSXA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"kautzer.linnie@example.net\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BASE}}/{{PREFIXV1}}/products/1",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"path": [
+								"{{PREFIXV1}}",
+								"products",
+								"1"
+							]
+						},
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Public-Key",
+								"value": "3044c9ec-9c94-4cb6-8e3f-b1fb01a358d6",
+								"type": "text"
+							},
+							{
+								"key": "X-Private-Key",
+								"value": "7LTDAOAI1Y6W3YOJOZ7DQFDPD0FXWSXA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"kautzer.linnie@example.net\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BASE}}/{{PREFIXV1}}/products/1",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"path": [
+								"{{PREFIXV1}}",
+								"products",
+								"1"
+							]
+						},
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "POST Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Public-Key",
+								"value": "3044c9ec-9c94-4cb6-8e3f-b1fb01a358d6",
+								"type": "text"
+							},
+							{
+								"key": "X-Private-Key",
+								"value": "7LTDAOAI1Y6W3YOJOZ7DQFDPD0FXWSXA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"category_id\": 1,\r\n    \"name\": \"product 1\",\r\n    \"description\": \"test\",\r\n    \"price\": 12000,\r\n    \"stock\":10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BASE}}/{{PREFIXV1}}/products",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"path": [
+								"{{PREFIXV1}}",
+								"products"
+							]
+						},
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "PATCH Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-Public-Key",
+								"value": "3044c9ec-9c94-4cb6-8e3f-b1fb01a358d6",
+								"type": "text"
+							},
+							{
+								"key": "X-Private-Key",
+								"value": "7LTDAOAI1Y6W3YOJOZ7DQFDPD0FXWSXA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"category_id\": 1,\r\n    \"name\": \"product 1\",\r\n    \"description\": \"test\",\r\n    \"price\": 12000,\r\n    \"stock\":10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL_BASE}}/{{PREFIXV1}}/products/1",
+							"host": [
+								"{{URL_BASE}}"
+							],
+							"path": [
+								"{{PREFIXV1}}",
+								"products",
+								"1"
+							]
+						},
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				}
+			]
 		}
 	]
-} 
+}
